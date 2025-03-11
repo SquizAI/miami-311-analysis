@@ -50,7 +50,10 @@ def main():
     if streamlit_path:
         print(f"Using Streamlit at: {streamlit_path}")
         # Launch the application
-        subprocess.run([streamlit_path, "run", "main.py"])
+        # Determine which script to run based on environment
+    script_to_run = "super_minimal.py" if os.environ.get("STREAMLIT_SHARING") or os.environ.get("HEROKU") else "main.py"
+    print(f"Running script: {script_to_run}")
+    subprocess.run([streamlit_path, "run", script_to_run])
     else:
         print("Error: Could not find Streamlit. Please install it with 'pip install streamlit'.")
         sys.exit(1)
